@@ -198,3 +198,31 @@ class PrioritizedSweepingValueIterationAgent(AsynchronousValueIterationAgent):
 
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
+
+
+class ApproximateSarsaAgent(ValueIterationAgent):
+    """
+       ApproximateSarsaAgent
+    """
+
+    def __init__(self, mdp, discount=0.9, extractor='IdentityExtractor', **args):
+        super().__init__(mdp)
+        self.featExtractor = util.lookup(extractor, globals())()
+
+    def runValueIteration(self):
+        "*** YOUR CODE HERE ***"
+
+    def getValue(self, state):
+        """
+          Return the value of the state (computed in __init__).
+        """
+
+    def getPolicy(self, state):
+        pass
+
+    def getAction(self, state):
+        "Returns the policy at the state (no exploration)."
+        pass
+
+    def getQValue(self, state, action):
+        pass
