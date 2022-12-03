@@ -218,3 +218,61 @@ class ApproximateQAgent(PacmanQAgent):
             # you might want to print your weights here for debugging
             "*** YOUR CODE HERE ***"
             pass
+
+
+class ApproximateSarsaAgent(ApproximateQAgent):
+    """
+       ApproximateSarsaAgent
+    """
+
+    def __init__(self, lambda_value=0.9, extractor='IdentityExtractor', **args):
+        self.featExtractor = util.lookup(extractor, globals())()
+        ApproximateQAgent.__init__(self, **args)
+        self.weights = util.Counter()
+        self.lambda_value = lambda_value
+        self.z_weights = util.Counter()
+        self.q_old_value = 0
+
+    def getWeights(self):
+        return self.weights
+
+    def getQValue(self, state, action):
+        """
+          Should return Q(state,action) = w * featureVector
+          where * is the dotProduct operator
+        """
+        q_value = 0
+        if action is None:
+            return q_value
+        feature_vector = self.featExtractor.getFeatures(state, action)
+        # print(feature_vector)
+        for key in feature_vector:
+            if key in self.getWeights():
+                q_value += self.getWeights()[key] * feature_vector[key]
+        return q_value
+
+    def update(self, state, action, nextState, reward):
+        """
+           Should update your weights based on transition
+        """
+        "*** YOUR CODE HERE ***"
+        feature_vector = self.featExtractor.getFeatures(state, action)
+        next_action = self.getAction(nextState)
+        q_value = self.getQValue(state, action)
+        next_q_value = self.getQValue(nextState, next_action)
+        delta = reward + self.discount * next_q_value - q_value
+        z_weights_sum = 0
+        for key in feature_vector:
+            z_weights_sum += self.z_weights[key] * feature_vector[key]
+
+        for key in feature_vector:
+            self.z_weights[key] = self.discount * self.lambda_value * self.z_weights[key] + (
+                    1 - self.epsilon * self.discount * self.lambda_value * z_weights_sum) * feature_vector[key]
+            self.weights[key] += self.epsilon * self.z_weights[key] * (
+                        delta + q_value - self.q_old_value) - self.epsilon * feature_vector[key] * (
+                                             q_value - self.q_old_value)
+        self.q_old_value = next_q_value
+
+    def final(self, state):
+        self.q_old_value = 0
+        ApproximateQAgent.final(state)
