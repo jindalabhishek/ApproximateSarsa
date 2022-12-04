@@ -11,12 +11,18 @@
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
+import csv
+import uuid
 
 from game import *
 from learningAgents import ReinforcementAgent
 from featureExtractors import *
 
 import random, util, math
+
+scores = [['Score']]
+run_number = 0
+folder = ''
 
 
 class QLearningAgent(ReinforcementAgent):
@@ -108,7 +114,10 @@ class QLearningAgent(ReinforcementAgent):
         flag = util.flipCoin(self.epsilon)
         if flag:
             legalActions = self.getLegalActions(state)
-            return random.choice(legalActions)
+            if legalActions:
+                return random.choice(legalActions)
+            else:
+                return None
         else:
             return self.getPolicy(state)
 
@@ -212,12 +221,18 @@ class ApproximateQAgent(PacmanQAgent):
         "Called at the end of each game."
         # call the super-class final method
         PacmanQAgent.final(self, state)
-
+        scores.append([state.getScore()])
         # did we finish training?
         if self.episodesSoFar == self.numTraining:
             # you might want to print your weights here for debugging
             "*** YOUR CODE HERE ***"
-            pass
+            file_name = folder + '/test-' + str(run_number) + '.csv'
+            print('folder:' + folder)
+            print(file_name)
+            os.makedirs(os.path.dirname(file_name), exist_ok=True)
+            with open(file_name, 'w+', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerows(scores)
 
 
 class ApproximateSarsaAgent(ApproximateQAgent):
@@ -225,9 +240,9 @@ class ApproximateSarsaAgent(ApproximateQAgent):
        ApproximateSarsaAgent
     """
 
-    def __init__(self, lambda_value=0.9, extractor='IdentityExtractor', **args):
-        self.featExtractor = util.lookup(extractor, globals())()
+    def __init__(self, lambda_value=0, extractor='IdentityExtractor', **args):
         ApproximateQAgent.__init__(self, **args)
+        self.featExtractor = util.lookup(extractor, globals())()
         self.weights = util.Counter()
         self.lambda_value = lambda_value
         self.z_weights = util.Counter()
@@ -262,17 +277,28 @@ class ApproximateSarsaAgent(ApproximateQAgent):
         next_q_value = self.getQValue(nextState, next_action)
         delta = reward + self.discount * next_q_value - q_value
         z_weights_sum = 0
-        for key in feature_vector:
-            z_weights_sum += self.z_weights[key] * feature_vector[key]
 
         for key in feature_vector:
+            for key_itr in feature_vector:
+                z_weights_sum += self.z_weights[key_itr] * feature_vector[key_itr]
+
             self.z_weights[key] = self.discount * self.lambda_value * self.z_weights[key] + (
-                    1 - self.epsilon * self.discount * self.lambda_value * z_weights_sum) * feature_vector[key]
-            self.weights[key] += self.epsilon * self.z_weights[key] * (
-                        delta + q_value - self.q_old_value) - self.epsilon * feature_vector[key] * (
-                                             q_value - self.q_old_value)
+                    1 - self.alpha * self.discount * self.lambda_value * z_weights_sum) * feature_vector[key]
+            self.weights[key] += self.alpha * self.z_weights[key] * (
+                    delta + q_value - self.q_old_value) - self.alpha * feature_vector[key] * (
+                                         q_value - self.q_old_value)
         self.q_old_value = next_q_value
 
     def final(self, state):
         self.q_old_value = 0
-        ApproximateQAgent.final(state)
+        self.z_weights = util.Counter()
+        ApproximateQAgent.final(self, state)
+        # scores.append([state.getScore()])
+        # if self.episodesSoFar == self.numTraining:
+        #     file_name = folder + '/test-' + str(run_number) + '.csv'
+        #     print('folder:' + folder)
+        #     print(file_name)
+        #     os.makedirs(os.path.dirname(file_name), exist_ok=True)
+        #     with open(file_name, 'w+', newline='') as file:
+        #         writer = csv.writer(file)
+        #         writer.writerows(scores)
