@@ -6,8 +6,8 @@
 3. Akshara Trichambaram (atricham@asu.edu)
 
 This project is developed using python 3.6 and requires the following packages:
-These packages can be installed using the pip manager
-pip install <package-name>
+These packages can be installed using the pip manager command:
+pip install package-name
 - numpy
 - matplotlib
 - pandas
