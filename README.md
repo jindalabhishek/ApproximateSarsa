@@ -21,7 +21,7 @@ the Approximate Q Learning Agent (implemented in Project 4)
 Following is the list of files modified/created 
 for implementation of this project.
 
-###Modified Files
+### Modified Files
 - qlearningAgents.py
   - This file is modified to write the score of 
   every episode at the end of every training batch 
@@ -31,7 +31,7 @@ for implementation of this project.
   on top of Simple Extractor. This is done by incorporating 
   capsule and non-scared ghost position features.
 
-###Created Files
+### Created Files
 - q_convergence_test.py
   - This test is used to compute the data files to calculate the converging 
   speed of Approximate Q Learning Agent (implemented in Project 4). It runs the
@@ -60,7 +60,7 @@ for implementation of this project.
     - Box Plot for True Online Lambda Sarsa Agent Average Reward Value 
     for different environments
 
-###Data Files Folder
+### Data Files Folder
 ApproximateQAgentSimpleExtractor
 ApproximateSarsaAgentSimpleExtractor
 ApproximateSarsaAgent_lambda5 (for lambda = 0.5)
@@ -71,7 +71,7 @@ ApproximateSarsaAgent (for Converging Behaviour, lambda = 0)
 ApproximateSarsaAgent_lambda9_convergence (lambda = 0.9)
 run_layouts (for different environments)
 
-##Run Instructions
+## Run Instructions
 1. Run python q_convergence_test.py
 2. Run python sarsa_convergence_test.py
 3. Run python multi_env_generator.py
