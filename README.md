@@ -61,15 +61,15 @@ for implementation of this project.
     for different environments
 
 ### Data Files Folder
-ApproximateQAgentSimpleExtractor
-ApproximateSarsaAgentSimpleExtractor
-ApproximateSarsaAgent_lambda5 (for lambda = 0.5)
-ApproximateSarsaAgent_lambda75 (for lambda = 0.75)
-ApproximateSarsaAgent_lambda9 (for lambda = 0.9)
-ApproximateQAgent (for Converging Behaviour)
-ApproximateSarsaAgent (for Converging Behaviour, lambda = 0)
-ApproximateSarsaAgent_lambda9_convergence (lambda = 0.9)
-run_layouts (for different environments)
+- ApproximateQAgentSimpleExtractor
+- ApproximateSarsaAgentSimpleExtractor
+- ApproximateSarsaAgent_lambda5 (for lambda = 0.5)
+- ApproximateSarsaAgent_lambda75 (for lambda = 0.75)
+- ApproximateSarsaAgent_lambda9 (for lambda = 0.9)
+- ApproximateQAgent (for Converging Behaviour)
+- ApproximateSarsaAgent (for Converging Behaviour, lambda = 0)
+- ApproximateSarsaAgent_lambda9_convergence (lambda = 0.9)
+- run_layouts (for different environments)
 
 ## Run Instructions
 1. Run python q_convergence_test.py
