@@ -43,9 +43,9 @@ for implementation of this project.
 - multi_env_generator.py
   - This file is used to compute the data files for different pacman environments
   for different sizes and complexities such as:
-  Layouts: 'trickyClassic', 'powerClassic', 'capsuleClassic', 'originalClassic', 'mediumGrid', 'smallGrid'
-  Feature Extractors: IdentityExtractor', 'SimpleExtractor', 'ComplexExtractor', 'IdentityExtractor', 'ComplexExtractor', 'ComplexExtractor'
-  Number of Ghosts: 2, 3, 4, 4, 3, 3
+    - Layouts: 'trickyClassic', 'powerClassic', 'capsuleClassic', 'originalClassic', 'mediumGrid', 'smallGrid' 
+    - Feature Extractors: IdentityExtractor', 'SimpleExtractor', 'ComplexExtractor', 'IdentityExtractor', 'ComplexExtractor', 'ComplexExtractor' 
+    - Number of Ghosts: 2, 3, 4, 4, 3, 3
 - plot_experiments.py
   - This file is used to plot the experiments based on data files computed in the previous step.
   - Following Experiments have been plotted:
