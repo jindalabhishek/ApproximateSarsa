@@ -155,6 +155,7 @@ class PacmanQAgent(QLearningAgent):
         gamma    - discount factor
         numTraining - number of training episodes, i.e. no learning after these many episodes
         """
+        print(alpha)
         args['epsilon'] = epsilon
         args['gamma'] = gamma
         args['alpha'] = alpha
@@ -240,8 +241,11 @@ class ApproximateSarsaAgent(ApproximateQAgent):
        ApproximateSarsaAgent
     """
 
-    def __init__(self, lambda_value=0, extractor='IdentityExtractor', **args):
+    def __init__(self, lambda_value=0.9, extractor='IdentityExtractor', **args):
         ApproximateQAgent.__init__(self, **args)
+        print(self.alpha)
+        print(self.epsilon)
+        print(self.discount)
         self.featExtractor = util.lookup(extractor, globals())()
         self.weights = util.Counter()
         self.lambda_value = lambda_value

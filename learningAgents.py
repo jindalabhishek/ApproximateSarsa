@@ -42,6 +42,7 @@ class ValueEstimationAgent(Agent):
         numTraining - number of training episodes, i.e. no learning after these many episodes
         """
         self.alpha = float(alpha)
+        print(self.alpha)
         self.epsilon = float(epsilon)
         self.discount = float(gamma)
         self.numTraining = int(numTraining)
